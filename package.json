@@ -1,0 +1,16 @@
+{
+	"name": "game-snake",
+	"version": "1.0.0",
+	"description": "Barebones Snake game, ready to be customized",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/robindevouge/game-snake.git"
+	},
+	"author": "Robin Devouge",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/robindevouge/game-snake/issues"
+	},
+	"homepage": "https://github.com/robindevouge/game-snake#readme"
+}
