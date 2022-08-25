@@ -1,5 +1,12 @@
 import { addVectors } from './utils';
 
+const oppositeDirections = {
+	right: 'left',
+	down: 'up',
+	left: 'right',
+	up: 'down',
+};
+
 const vectors = {
 	right: { x: 1, y: 0 },
 	down: { x: 0, y: 1 },
@@ -58,6 +65,9 @@ export default class Snake {
 	}
 
 	move(dir) {
+		// cancel movement if it is the opposite direction
+		if (dir === oppositeDirections[this.direction]) return;
+
 		// clone head as segment
 		this.segments.unshift(Object.assign(Object.create(Object.getPrototypeOf(this.head)), this.head));
 
