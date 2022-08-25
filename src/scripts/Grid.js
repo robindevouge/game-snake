@@ -2,6 +2,9 @@ import Cell from './Cell';
 
 export default class Grid {
 	constructor(width, height, gridClass = 'grid') {
+		this.width = width;
+		this.height = height;
+
 		this.element = document.createElement('div');
 		this.element.classList.add(gridClass);
 
@@ -18,5 +21,9 @@ export default class Grid {
 				this.element.appendChild(cell.element);
 			}
 		}
+	}
+
+	getCell(coord) {
+		return this.cells[coord.x + coord.y * this.width]
 	}
 }

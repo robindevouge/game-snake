@@ -1,7 +1,9 @@
 export default class Cell {
 	constructor(x, y, cellClass = 'cell') {
+		this.defaultClass = cellClass;
+
 		this.element = document.createElement('div');
-		this.element.classList.add(cellClass);
+		this.element.className = cellClass;
 		this.element.dataset.x = x;
 		this.element.dataset.y = y;
 

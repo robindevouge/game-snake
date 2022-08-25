@@ -1,4 +1,6 @@
-import Grid from "./Grid"
+import Controls from './Controls';
+import Grid from './Grid';
+import Snake from './Snake';
 
 const $gridContainer = document.querySelector('.grid-container');
 
@@ -7,30 +9,18 @@ const Game = {
 		gridWidth: 15,
 		gridHeight: 15,
 		scoreIncrement: 1,
+		startPosition: {
+			x: 5,
+			y: 7,
+		},
 	},
 	state: {
-		position: {
-			x: 3,
-			y: 0,
-		},
-		segments: [
-			{
-				x: 2,
-				y: 0,
-			},
-			{
-				x: 1,
-				y: 0,
-			},
-			{
-				x: 0,
-				y: 0,
-			},
-		],
 		food: [],
 		score: 0,
 	},
 	grid: null,
+	snake: null,
+	controls: null,
 };
 
 const createGrid = () => {
@@ -38,11 +28,48 @@ const createGrid = () => {
 	$gridContainer.appendChild(Game.grid.element);
 };
 
-Game.init = () => {
-	createGrid();
+const createSnake = () => {
+	Game.snake = new Snake(Game.grid, Game.config.startPosition.x, Game.config.startPosition.y);
 };
 
-Game.start = () => {};
+const initControls = () => {
+	Game.controls = new Controls([
+		{
+			key: 'ArrowUp',
+			action: () => {
+				Game.snake.move('up');
+			},
+		},
+		{
+			key: 'ArrowRight',
+			action: () => {
+				Game.snake.move('right');
+			},
+		},
+		{
+			key: 'ArrowDown',
+			action: () => {
+				Game.snake.move('down');
+			},
+		},
+		{
+			key: 'ArrowLeft',
+			action: () => {
+				Game.snake.move('left');
+			},
+		},
+	]);
+};
+
+Game.init = () => {
+	createGrid();
+	createSnake();
+	initControls();
+};
+
+Game.start = () => {
+	Game.controls.disabled = false;
+};
 
 Game.computeNextFrame = () => {};
 
@@ -50,4 +77,5 @@ Game.renderFrame = () => {};
 
 document.addEventListener('DOMContentLoaded', () => {
 	Game.init();
+	Game.start();
 });

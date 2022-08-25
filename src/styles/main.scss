@@ -7,12 +7,15 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100%;
+	padding: 0;
+	margin: 0;
 
 	.grid-container {
 		.grid {
 			box-shadow: inset -1px -1px 0 1px #000;
 
 			.cell {
+				position: relative;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -21,6 +24,55 @@ body {
 				overflow: hidden;
 				box-shadow: inset 1px 1px 0 1px #000;
 				font-size: 12px;
+				color: rgba(#000, 0.2);
+
+
+				&.snake-head,
+				&.snake-body,
+				&.snake-tail {
+					color: transparent;
+					background-image: url('../assets/img/snake-sprite.svg');
+					background-size: 400%;
+				}
+
+				&.snake-head {
+					&.right {
+						background-position: 0% 0%;
+					}
+					&.down {
+						background-position: -100% 0%;
+					}
+					&.left {
+						background-position: -200% 0%;
+					}
+					&.up {
+						background-position: -300% 0%;
+					}
+				}
+
+				&.snake-body {
+					&.right, &.left {
+						background-position: 0% -200%;
+					}
+					&.down, &.up {
+						background-position: -100% -200%;
+					}
+				}
+
+				&.snake-tail {
+					&.right {
+						background-position: 0% -100%;
+					}
+					&.down {
+						background-position: -100% -100%;
+					}
+					&.left {
+						background-position: -200% -100%;
+					}
+					&.up {
+						background-position: -300% -100%;
+					}
+				}
 			}
 		}
 	}
