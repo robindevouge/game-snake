@@ -2,7 +2,11 @@
 	"name": "game-snake",
 	"version": "1.0.0",
 	"description": "Barebones Snake game, ready to be customized",
-	"scripts": {},
+	"source": "src/index.html",
+	"scripts": {
+		"start": "parcel",
+		"build": "parcel build"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/robindevouge/game-snake.git"
@@ -12,5 +16,9 @@
 	"bugs": {
 		"url": "https://github.com/robindevouge/game-snake/issues"
 	},
-	"homepage": "https://github.com/robindevouge/game-snake#readme"
+	"homepage": "https://github.com/robindevouge/game-snake#readme",
+	"devDependencies": {
+		"@parcel/transformer-sass": "^2.7.0",
+		"parcel": "^2.7.0"
+	}
 }
