@@ -1,8 +1,25 @@
-// class SnakeSegment {
-// 	constructor (x, y) {
+import { addVectors } from './utils';
 
-// 	}
-// }
+const vectors = {
+	right: { x: 1, y: 0 },
+	down: { x: 0, y: 1 },
+	left: { x: -1, y: 0 },
+	up: { x: 0, y: -1 },
+};
+
+class Segment {
+	constructor(cell, position, direction) {
+		this.cell = cell;
+		this.position = position;
+		this.direction = direction;
+	}
+
+	draw(type) {
+		this.cell.element.className = this.cell.defaultClass;
+		this.cell.element.classList.add(`snake-${type}`);
+		this.cell.element.classList.add(this.direction);
+	}
+}
 
 export default class Snake {
 	constructor(grid, x, y, length = 3) {
@@ -10,13 +27,17 @@ export default class Snake {
 		this.position = { x, y };
 		this.direction = 'right';
 		this.length = 3;
+		this.head = null;
 		this.segments = [];
 
+		this.head = new Segment(this.grid.getCell(this.position), this.position, this.direction);
+
 		for (let i = 0; i < this.length; i++) {
-			this.segments.push({
-				position: { x: x - i - 1, y: this.position.y },
-				direction: 'right',
-			});
+			const pos = {
+				x: x - i - 1,
+				y: this.position.y,
+			};
+			this.segments.push(new Segment(this.grid.getCell(pos), pos, 'right'));
 		}
 
 		this.draw();
@@ -24,25 +45,33 @@ export default class Snake {
 
 	draw() {
 		// draw head
-		const headCell = this.grid.getCell(this.position);
-		headCell.element.className = headCell.defaultClass;
-		headCell.element.classList.add('snake-head');
-		headCell.element.classList.add(this.direction);
+		this.head.draw('head');
 
 		// draw segments
 		this.segments.forEach((segment, index) => {
-			const cell = this.grid.getCell(segment.position);
-			cell.element.className = cell.defaultClass;
 			if (index === this.segments.length - 1) {
-				cell.element.classList.add('snake-tail');
+				segment.draw('tail');
 			} else {
-				cell.element.classList.add('snake-body');
+				segment.draw('body');
 			}
-			cell.element.classList.add(segment.direction);
 		});
 	}
 
 	move(dir) {
-		console.log(dir);
+		// clone head as segment
+		this.segments.unshift(Object.assign(Object.create(Object.getPrototypeOf(this.head)), this.head));
+
+		// update position
+		this.position = addVectors(this.position, vectors[dir]);
+		this.direction = dir;
+
+		// create new head
+		this.head = new Segment(this.grid.getCell(this.position), this.position, this.direction);
+
+		// remove last segment
+		const prevTail = this.segments.pop();
+		prevTail.cell.element.className = prevTail.cell.defaultClass;
+
+		this.draw();
 	}
 }
