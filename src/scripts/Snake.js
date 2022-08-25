@@ -62,7 +62,20 @@ export default class Snake {
 		this.segments.unshift(Object.assign(Object.create(Object.getPrototypeOf(this.head)), this.head));
 
 		// update position
-		this.position = addVectors(this.position, vectors[dir]);
+		let nextPos = addVectors(this.position, vectors[dir]);
+		if (nextPos.x < 0) {
+			nextPos.x = this.grid.width - 1;
+		}
+		if (nextPos.x > this.grid.width - 1) {
+			nextPos.x = 0;
+		}
+		if (nextPos.y < 0) {
+			nextPos.y = this.grid.height - 1;
+		}
+		if (nextPos.y > this.grid.height - 1) {
+			nextPos.y = 0;
+		}
+		this.position = nextPos;
 		this.direction = dir;
 
 		// create new head
